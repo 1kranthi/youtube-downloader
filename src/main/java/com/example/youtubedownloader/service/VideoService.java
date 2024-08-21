@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -29,8 +30,10 @@ public class VideoService {
             String filename = sanitizedTitle + "_" + uniqueId + ".mp4";
 
             // Download the video using yt-dlp with specified quality
+            String userHome = System.getProperty("user.home");
+            String outputPath = Paths.get(userHome, "Downloads", "Bookmark", filename).toString();
             String[] command = {"yt-dlp", "-f", "bestvideo[height<=" + quality + "]+bestaudio/best[height<=" + quality + "]",
-                    "-o", "/home/solipuram-kranthikumar/Downloads/Bookmark/" + filename, url};
+                    "-o", outputPath, url};
             Process process = new ProcessBuilder(command).start();
             process.waitFor();
 
