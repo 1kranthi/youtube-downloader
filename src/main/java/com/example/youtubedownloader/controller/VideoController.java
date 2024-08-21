@@ -31,7 +31,8 @@ public class VideoController {
     @GetMapping("/downloads/{filename}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename) {
         try {
-            Path filePath = Paths.get("/home/solipuram-kranthikumar/Downloads/Bookmark").resolve(filename).normalize();
+            String userHome = System.getProperty("user.home");
+            Path filePath = Paths.get(userHome, "Downloads", "Bookmark").resolve(filename).normalize();
             Resource resource = new org.springframework.core.io.UrlResource(filePath.toUri());
 
             return ResponseEntity.ok()
